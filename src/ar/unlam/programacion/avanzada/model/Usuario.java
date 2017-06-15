@@ -1,4 +1,4 @@
-package avanzada.model;
+package ar.unlam.programacion.avanzada.model;
 
 import ar.unlam.programacion.avanzada.billeteraImpl.Billetera;
 

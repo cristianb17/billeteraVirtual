@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package avanzada.ventanas;
+package ar.unlam.programacion.avanzada.ventanas;
 
 import ar.unlam.programacion.avanzada.billeteraImpl.Billetera;
-import avanzada.model.Usuario;
-import avanzada.documentos.Util;
+import ar.unlam.programacion.avanzada.model.Usuario;
+import ar.unlam.programacion.avanzada.documentos.Util;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 

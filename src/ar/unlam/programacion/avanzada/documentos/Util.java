@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package avanzada.documentos;
+package ar.unlam.programacion.avanzada.documentos;
 
 import ar.unlam.programacion.avanzada.billeteraImpl.Billetera;
-import avanzada.model.Usuario;
+import ar.unlam.programacion.avanzada.model.Usuario;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
