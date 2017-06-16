@@ -7,7 +7,9 @@ package ar.unlam.programacion.avanzada.ventanas;
 
 import ar.unlam.programacion.avanzada.billeteraImpl.Billetera;
 import ar.unlam.programacion.avanzada.billeteraImpl.Movimiento;
+import ar.unlam.programacion.avanzada.documentos.Util;
 import ar.unlam.programacion.avanzada.model.Usuario;
+import java.util.Date;
 import javax.swing.JOptionPane;
 import javax.swing.DefaultListModel;
 
@@ -25,11 +27,14 @@ public class BilleteraWindow extends javax.swing.JFrame {
         saldoDisponible.setText(String.valueOf(usuario.getBilletera().getMontoTotalDineroDisponible()));
         nombreUsuario.setText(usuario.getNombre() + " " + usuario.getApellido());
         DefaultListModel<String> listModel = new DefaultListModel<>();
+        float sum = 0;
         for(Movimiento mov : usuario.getBilletera().getMovimientos()) {
             listModel.addElement(mov.toString());
+            sum = sum + mov.getMonto().floatValue();
         }
         jListMovimientos.setModel(listModel);
         usuario1 = usuario;
+        montoTotalGastos.setText(String.valueOf(sum));
     }
 
     private BilleteraWindow() {
@@ -72,6 +77,7 @@ public class BilleteraWindow extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         jListMovimientos = new javax.swing.JList<>();
         jLabel10 = new javax.swing.JLabel();
+        montoTotalGastos = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -132,6 +138,8 @@ public class BilleteraWindow extends javax.swing.JFrame {
 
         jLabel10.setText("Movimientos");
 
+        montoTotalGastos.setText("jLabel2");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -144,15 +152,14 @@ public class BilleteraWindow extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(usuarioText)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 328, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(saldoDisponible)
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel9)
                                 .addGap(41, 41, 41))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel8)
                                 .addGap(25, 25, 25))))
                     .addGroup(layout.createSequentialGroup()
@@ -163,9 +170,12 @@ public class BilleteraWindow extends javax.swing.JFrame {
                                 .addGap(92, 92, 92)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel1)
-                                    .addComponent(jLabel3)))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel3)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(montoTotalGastos))))
                             .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 305, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap())
+                        .addContainerGap(79, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -187,7 +197,7 @@ public class BilleteraWindow extends javax.swing.JFrame {
                         .addComponent(jButton1)
                         .addGap(35, 35, 35))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 423, Short.MAX_VALUE)
+                        .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 426, Short.MAX_VALUE)
                         .addContainerGap())))
         );
         layout.setVerticalGroup(
@@ -209,7 +219,9 @@ public class BilleteraWindow extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel8)
                         .addGap(10, 10, 10)
-                        .addComponent(jLabel3)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3)
+                            .addComponent(montoTotalGastos))
                         .addGap(62, 62, 62)
                         .addComponent(jLabel10)
                         .addGap(18, 18, 18)
@@ -240,6 +252,9 @@ public class BilleteraWindow extends javax.swing.JFrame {
                JOptionPane.showMessageDialog(null, "No se ha completado el campo Descripcion o Monto");
         }else{
             usuario1.getBilletera().agregarMovimiento(descripcionArea.getText(), Float.valueOf(monto.getText()), medioPago.getSelectedItem().toString(), tipoMovimiento.getSelectedItem().toString()); 
+            saldoDisponible.setText(String.valueOf(usuario1.getBilletera().obtenerDineroDisponible()));
+            montoTotalGastos.setText(String.valueOf(usuario1.getBilletera().obtenerSaldosGastos()));
+            Util.escribirDatosMovimientos(String.valueOf(usuario1.getDni()), monto.getText(),tipoMovimiento.getSelectedItem().toString(), descripcionArea.getText(), medioPago.getSelectedItem().toString(), new Date());
         }
     }//GEN-LAST:event_guardarMovimiento
 
@@ -313,6 +328,7 @@ public class BilleteraWindow extends javax.swing.JFrame {
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JComboBox<String> medioPago;
     private javax.swing.JTextField monto;
+    private javax.swing.JLabel montoTotalGastos;
     private javax.swing.JLabel nombreUsuario;
     private javax.swing.JLabel saldoDisponible;
     private javax.swing.JComboBox<String> tipoMovimiento;

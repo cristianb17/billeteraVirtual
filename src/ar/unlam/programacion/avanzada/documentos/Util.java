@@ -14,6 +14,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.Format;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -140,5 +141,37 @@ public class Util {
             }
            return date;
    }
+   
+    public  static boolean escribirDatosMovimientos(String dni, String monto, String movimiento, String descripcion, String medioDePago, Date fecha)
+    {
+        FileWriter fichero = null;
+        PrintWriter pw = null;
+        try
+        {
+            String rutaArchivo = "E:/infoUsuarios" + dni + ".txt";
+            File af = new File(rutaArchivo);
+        
+            fichero = new FileWriter(rutaArchivo, true);
+            pw = new PrintWriter(fichero);
+            pw.println();
+            pw.print(monto + "-");
+            pw.print(movimiento + "-");
+            pw.print(descripcion + "-");
+            pw.print(medioDePago + "-");
+            Format formatter = new SimpleDateFormat("dd.mm.yyyy");
+            pw.print(formatter.format(fecha));
+       
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+           try {
+           if (null != fichero)
+              fichero.close();
+           } catch (Exception e2) {
+              e2.printStackTrace();
+           }
+        }
+         return true;
+    }
 
 }
