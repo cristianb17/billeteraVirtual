@@ -19,6 +19,7 @@ import javax.swing.DefaultListModel;
  */
 public class BilleteraWindow extends javax.swing.JFrame {
     public Usuario usuario1 = null;
+    private DefaultListModel<String> listModel = null;
     /**
      * Creates new form Billetera
      */
@@ -26,7 +27,7 @@ public class BilleteraWindow extends javax.swing.JFrame {
         initComponents();
         saldoDisponible.setText(String.valueOf(usuario.getBilletera().getMontoTotalDineroDisponible()));
         nombreUsuario.setText(usuario.getNombre() + " " + usuario.getApellido());
-        DefaultListModel<String> listModel = new DefaultListModel<>();
+        listModel = new DefaultListModel<>();
         float sum = 0;
         for(Movimiento mov : usuario.getBilletera().getMovimientos()) {
             listModel.addElement(mov.toString());
@@ -41,12 +42,6 @@ public class BilleteraWindow extends javax.swing.JFrame {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    private boolean validarCamposNull(String value){
-        if(value == null || value.equals("")){
-            return false;
-        }
-        return true;
-    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -248,13 +243,21 @@ public class BilleteraWindow extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void guardarMovimiento(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarMovimiento
-        if(descripcionArea.getText() == null || monto.getText() == null) {
+        if(descripcionArea.getText().equals("") || monto.getText().equals("")) {
                JOptionPane.showMessageDialog(null, "No se ha completado el campo Descripcion o Monto");
         }else{
-            usuario1.getBilletera().agregarMovimiento(descripcionArea.getText(), Float.valueOf(monto.getText()), medioPago.getSelectedItem().toString(), tipoMovimiento.getSelectedItem().toString()); 
-            saldoDisponible.setText(String.valueOf(usuario1.getBilletera().obtenerDineroDisponible()));
-            montoTotalGastos.setText(String.valueOf(usuario1.getBilletera().obtenerSaldosGastos()));
-            Util.escribirDatosMovimientos(String.valueOf(usuario1.getDni()), monto.getText(),tipoMovimiento.getSelectedItem().toString(), descripcionArea.getText(), medioPago.getSelectedItem().toString(), new Date());
+            float montoEnBilletera = usuario1.getBilletera().obtenerDineroDisponible();
+            
+            if(montoEnBilletera >= Float.valueOf(monto.getText())) {
+                usuario1.getBilletera().agregarMovimiento(descripcionArea.getText(), Float.valueOf(monto.getText()), medioPago.getSelectedItem().toString(), tipoMovimiento.getSelectedItem().toString()); 
+                saldoDisponible.setText(String.valueOf(usuario1.getBilletera().obtenerDineroDisponible()));
+                montoTotalGastos.setText(String.valueOf(usuario1.getBilletera().obtenerSaldosGastos()));
+                listModel.addElement(usuario1.getBilletera().getMovimientos().get(usuario1.getBilletera().getMovimientos().size() - 1 ).toString());
+                jListMovimientos.setModel(listModel);
+                Util.escribirDatosMovimientos(String.valueOf(usuario1.getDni()), monto.getText(),tipoMovimiento.getSelectedItem().toString(), descripcionArea.getText(), medioPago.getSelectedItem().toString(), new Date());
+           }else {
+                 JOptionPane.showMessageDialog(null, "No tiene saldo para realizar el Movimiento, por favor agregue dinero o un monto menor a : " + montoEnBilletera);
+            }
         }
     }//GEN-LAST:event_guardarMovimiento
 

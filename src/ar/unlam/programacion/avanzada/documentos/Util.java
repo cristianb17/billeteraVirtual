@@ -158,8 +158,8 @@ public class Util {
             pw.print(movimiento + "-");
             pw.print(descripcion + "-");
             pw.print(medioDePago + "-");
-            Format formatter = new SimpleDateFormat("dd.mm.yyyy");
-            pw.print(formatter.format(fecha));
+            SimpleDateFormat dt = new SimpleDateFormat("dd.mm.yyyy"); 
+            pw.print(dt.format(fecha));
        
         } catch (Exception e) {
             e.printStackTrace();

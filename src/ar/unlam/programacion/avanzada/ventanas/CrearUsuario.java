@@ -167,22 +167,33 @@ public class CrearUsuario extends javax.swing.JFrame {
                  super.dispose();
      }
     private void botonCrearUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCrearUsuarioActionPerformed
-         Usuario usuario = new Usuario();
-         Billetera billetera = new Billetera();
-         
-         usuario.setApellido(ApellidoText.getText());
-         usuario.setNombre(NombreText.getText());
-         usuario.setCiudad(ciudadText.getText());
-         usuario.setDni(Long.valueOf(dniText.getText()));
-         usuario.setPassword(passwordText.getText());
-         billetera.setMontoTotalDineroDisponible(Long.valueOf(montoText.getText()));
-         usuario.setBilletera(billetera);
-         boolean escribir = Util.escribirArchivo(dniText.getText(), usuario);
-         
-         if(escribir){
-            JOptionPane.showMessageDialog(null, "Se ha creado el USUARIO");
+      
+         if(ApellidoText.getText().equals("") || NombreText.getText().equals("") 
+                 || ciudadText.getText().equals("")  || dniText.getText().equals("")
+                 || dniText.getText().equals("") ||  passwordText.getText().equals("") 
+                 || montoText.getText().equals("")) {
+                 JOptionPane.showMessageDialog(null, "Se ha creado el USUARIO");
+         } else {
+               Usuario usuario = new Usuario();
+                Billetera billetera = new Billetera();
+                usuario.setApellido(ApellidoText.getText());
+                usuario.setNombre(NombreText.getText());
+                usuario.setCiudad(ciudadText.getText());
+                try {
+                     usuario.setDni(Long.valueOf(dniText.getText()));
+                     billetera.setMontoTotalDineroDisponible(Long.valueOf(montoText.getText()));
+                    usuario.setPassword(passwordText.getText());
+                    usuario.setBilletera(billetera);
+                    boolean escribir = Util.escribirArchivo(dniText.getText(), usuario);
+                    if(escribir){
+                       JOptionPane.showMessageDialog(null, "Se ha creado el USUARIO");
+                    }
+                     CloseJframe();
+                } catch (NumberFormatException e) {
+                     JOptionPane.showMessageDialog(null, "Los campos Monto y DNI deben ser numericos");
+                }
+             
          }
-        CloseJframe();
     }//GEN-LAST:event_botonCrearUsuarioActionPerformed
 
     /**
