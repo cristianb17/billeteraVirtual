@@ -57,7 +57,10 @@ public class Billetera {
      public float getMontoTotalGastos() {
         return montoTotalGastos;
     }
-
+     
+    public void setMovimientos(List<Movimiento> movimientos) {
+        this.movimientos = movimientos;
+    }
     public float getMontoTotalDineroDisponible() {
         return montoTotalDineroDisponible;
     }

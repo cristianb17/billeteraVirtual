@@ -10,10 +10,10 @@ import ar.unlam.programacion.avanzada.model.Pago;
 import ar.unlam.programacion.avanzada.model.Tarjeta;
 
 public class Movimiento {
-	public static final String COMPRA = "compra";
-	public static final String PAGO = "pago";
-	public static final String TARJETA = "tarjeta";
-	public static final String EFECTIVO = "efectivo";
+	public static final String COMPRA = "COMPRA";
+	public static final String PAGO = "PAGO";
+	public static final String TARJETA = "TARJETA";
+	public static final String EFECTIVO = "EFECTIVO";
 	private Float monto;
 	private TipoMovimiento movimiento;
 	private Date fecha;
@@ -34,9 +34,9 @@ public class Movimiento {
 	private TipoMovimiento obtenerMovimiento(String movimiento) {
 		TipoMovimiento tipoMov = null;
 		
-		if(movimiento.equals(PAGO)) {
+		if(movimiento.toUpperCase().equals(PAGO)) {
 			tipoMov = new Pago();
-		}else if(movimiento.equals(COMPRA)){
+		}else if(movimiento.toUpperCase().equals(COMPRA)){
 			tipoMov = new Compra();
 		}else {
 			System.out.println("Error no se reconoce movimiento");
@@ -46,9 +46,9 @@ public class Movimiento {
 	
 	
 	private MedioPago obtenerMedioPago(String medioPagoIngresado){
-		if(medioPagoIngresado.equals(TARJETA)) {
+		if(medioPagoIngresado.toUpperCase().equals(TARJETA)) {
 			medioDePago = new Tarjeta();
-		}else if(medioPagoIngresado.equals(EFECTIVO)){
+		}else if(medioPagoIngresado.toUpperCase().equals(EFECTIVO)){
 			medioDePago = new Efectivo();
 		}else {
 			System.out.println("Error no se reconoce medio de pago");
@@ -90,10 +90,9 @@ public class Movimiento {
 
 	@Override
 	public String toString() {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-
-		return "Movimiento [monto=" + monto + ", movimiento=" + movimiento.toString() + ", fecha=" + sdf.format(fecha) + ", descripcion="
-				+ descripcion + ", medioDePago=" + medioDePago + "]";
+                 SimpleDateFormat dt = new SimpleDateFormat("dd.mm.yyyy"); 
+		return monto + ", movimiento=" + movimiento.toString() + ", fecha=" + dt.format(fecha) + ", descripcion="
+				+ descripcion + ", medioDePago=" + medioDePago;
 	}
 
 }

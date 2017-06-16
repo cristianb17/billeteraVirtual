@@ -6,6 +6,7 @@
 package ar.unlam.programacion.avanzada.documentos;
 
 import ar.unlam.programacion.avanzada.billeteraImpl.Billetera;
+import ar.unlam.programacion.avanzada.billeteraImpl.Movimiento;
 import ar.unlam.programacion.avanzada.model.Usuario;
 import java.io.BufferedReader;
 import java.io.File;
@@ -13,6 +14,13 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -85,7 +93,24 @@ public class Util {
          usuario.setCiudad(datosUsuario[2]);
          usuario.setDni(Long.valueOf(datosUsuario[3]));
          usuario.setPassword(datosUsuario[4]);
+         
+         List<Movimiento> movimientos = new ArrayList<Movimiento>();
+         String[] movimiento = null;
+         
+
+        Date fecha = null; 
+         while((linea=br.readLine())!=null) {
+             movimiento = linea.split("-");
+             Float monto = Float.valueOf(movimiento[0]);
+             String tipoMovimiento = movimiento[1];
+             String descripcion = movimiento[2];
+             String medioPago = movimiento[3];
+             fecha = Util.formatearFecha(movimiento[4]); 
+             Movimiento mov = new Movimiento(monto.floatValue(), tipoMovimiento, descripcion, medioPago, fecha);
+             movimientos.add(mov);
+         }
          billetera.setMontoTotalDineroDisponible(Float.valueOf(datosUsuario[5]));
+         billetera.setMovimientos(movimientos);
          usuario.setBilletera(billetera);
          
       }catch(Exception e){
@@ -103,6 +128,17 @@ public class Util {
          }
       }
          return usuario;
+   }
+   
+   public static Date formatearFecha(String fecha) {
+          SimpleDateFormat dt = new SimpleDateFormat("dd.mm.yyyy"); 
+           Date date = null;
+            try {
+                date = dt.parse(fecha);
+            } catch (ParseException ex) {
+                Logger.getLogger(Util.class.getName()).log(Level.SEVERE, "Formato de fecha erroneo", ex);
+            }
+           return date;
    }
 
 }
