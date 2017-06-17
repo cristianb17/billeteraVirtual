@@ -31,15 +31,9 @@ public class Billetera {
 	}
 	
 	public void agregarMovimiento(String descripcion, float monto, String medioPago, String tipoMovimiento){
-		
-		if(montoTotalDineroDisponible >= monto) {
-			montoTotalDineroDisponible = montoTotalDineroDisponible - monto;
 			System.out.println("se ha agregado el movimiento : " + tipoMovimiento + ", se realizo la operacion de: " + descripcion + ", por un saldo de : " + monto);
 			Movimiento movimiento = new Movimiento(monto, tipoMovimiento, descripcion, medioPago, new Date());
 			this.movimientos.add(movimiento);
-		} else {
-			System.out.println("no hay dinero suficiente para agregar el movimiento : " + descripcion + ", con un monto : " + monto + ", dinero disponible : " + montoTotalDineroDisponible);
-		}
 	}
         
         

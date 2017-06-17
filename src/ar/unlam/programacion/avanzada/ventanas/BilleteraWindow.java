@@ -26,13 +26,15 @@ public class BilleteraWindow extends javax.swing.JFrame {
     public BilleteraWindow(Usuario usuario) {
         initComponents();
         listModel = new DefaultListModel<>();
+        
+        usuario1 = usuario;
         float sum = 0;
-        for(Movimiento mov : usuario.getBilletera().getMovimientos()) {
+        usuario1.getBilletera().obtenerSaldosGastos();
+        for(Movimiento mov : usuario1.getBilletera().getMovimientos()) {
             listModel.addElement(mov.toString());
             sum = sum + mov.getMonto().floatValue();
         }
         jListMovimientos.setModel(listModel);
-        usuario1 = usuario;
         montoTotalGastos.setText(String.valueOf(sum));
         saldoDisponible.setText(String.valueOf(usuario.getBilletera().getMontoTotalDineroDisponible()));
         nombreUsuario.setText(usuario.getNombre() + " " + usuario.getApellido());
@@ -73,6 +75,8 @@ public class BilleteraWindow extends javax.swing.JFrame {
         jListMovimientos = new javax.swing.JList<>();
         jLabel10 = new javax.swing.JLabel();
         montoTotalGastos = new javax.swing.JLabel();
+        ingresoSaldoExtra = new javax.swing.JTextField();
+        saldoExtra = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -135,65 +139,79 @@ public class BilleteraWindow extends javax.swing.JFrame {
 
         montoTotalGastos.setText("jLabel2");
 
+        saldoExtra.setText("Ingresar Saldo Extra");
+        saldoExtra.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saldoExtraActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(45, 45, 45)
+                .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel10)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(usuarioText)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(saldoDisponible)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel9)
-                                .addGap(41, 41, 41))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jLabel8)
-                                .addGap(25, 25, 25))))
-                    .addGroup(layout.createSequentialGroup()
+                        .addGap(15, 15, 15)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(53, 53, 53)
-                                .addComponent(nombreUsuario)
-                                .addGap(92, 92, 92)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel1)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel3)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(montoTotalGastos))))
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 305, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(79, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel4)
+                                .addComponent(usuarioText)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel5))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addComponent(saldoDisponible)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jLabel9)
+                                        .addGap(41, 41, 41))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addComponent(jLabel8)
+                                        .addGap(25, 25, 25))))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel4)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabel5))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(monto)
+                                        .addGap(32, 32, 32)
+                                        .addComponent(tipoMovimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(46, 46, 46)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(medioPago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel7))
+                                .addGap(86, 86, 86))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(monto)
-                                .addGap(32, 32, 32)
-                                .addComponent(tipoMovimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(46, 46, 46)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(medioPago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel7))
-                        .addGap(86, 86, 86))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton1)
-                        .addGap(35, 35, 35))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 426, Short.MAX_VALUE)
-                        .addContainerGap())))
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButton1)
+                                .addGap(38, 38, 38))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(53, 53, 53)
+                                        .addComponent(nombreUsuario)
+                                        .addGap(92, 92, 92)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel1)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(jLabel3)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(montoTotalGastos))))
+                                    .addComponent(jLabel10)
+                                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 305, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 115, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGap(208, 208, 208)
+                                .addComponent(ingresoSaldoExtra)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(saldoExtra)
+                                .addGap(41, 41, 41))))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -210,14 +228,18 @@ public class BilleteraWindow extends javax.swing.JFrame {
                             .addComponent(saldoDisponible)
                             .addComponent(nombreUsuario))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel8)
+                .addGap(10, 10, 10)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(montoTotalGastos))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(ingresoSaldoExtra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(saldoExtra))
+                .addGap(29, 29, 29)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel8)
-                        .addGap(10, 10, 10)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3)
-                            .addComponent(montoTotalGastos))
-                        .addGap(62, 62, 62)
                         .addComponent(jLabel10)
                         .addGap(18, 18, 18)
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -236,7 +258,7 @@ public class BilleteraWindow extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jButton1))
-                .addContainerGap(40, Short.MAX_VALUE))
+                .addGap(34, 34, 34))
         );
 
         pack();
@@ -248,16 +270,19 @@ public class BilleteraWindow extends javax.swing.JFrame {
         }else{
             float montoEnBilletera = usuario1.getBilletera().obtenerDineroDisponible();
             try {
-                  if(montoEnBilletera >= Float.valueOf(monto.getText())) {
+                  if(montoEnBilletera >= Float.valueOf(monto.getText()) && montoEnBilletera != 0f) {
                     String dni = String.valueOf(usuario1.getDni());
-                    usuario1.getBilletera().agregarMovimiento(descripcionArea.getText(), Float.valueOf(monto.getText()), medioPago.getSelectedItem().toString(), tipoMovimiento.getSelectedItem().toString()); 
-                    Float montoDisponible = usuario1.getBilletera().obtenerDineroDisponible();
-                    saldoDisponible.setText(String.valueOf(montoDisponible));
-                    usuario1.getBilletera().setMontoTotalDineroDisponible(montoEnBilletera);
-                    montoTotalGastos.setText(String.valueOf(usuario1.getBilletera().obtenerSaldosGastos()));
+                    Float montoAdescontar = Float.valueOf(monto.getText());
+                    usuario1.getBilletera().agregarMovimiento(descripcionArea.getText(), montoAdescontar, medioPago.getSelectedItem().toString(), tipoMovimiento.getSelectedItem().toString());
+                    Float montoDisponibleActual = montoEnBilletera - montoAdescontar;
+                    usuario1.getBilletera().setMontoTotalDineroDisponible(montoDisponibleActual);
+                    saldoDisponible.setText(String.valueOf(montoDisponibleActual));
+                    montoTotalGastos.setText(String.valueOf(Float.valueOf(montoTotalGastos.getText()) + montoAdescontar));
                     listModel.addElement(usuario1.getBilletera().getMovimientos().get(usuario1.getBilletera().getMovimientos().size() - 1 ).toString());
                     jListMovimientos.setModel(listModel);
-                    Util.escribirDatosMovimientos(dni, monto.getText(),tipoMovimiento.getSelectedItem().toString(), descripcionArea.getText(), medioPago.getSelectedItem().toString(), new Date());
+                    Util.escribirDatosMovimientos(dni, monto.getText(),tipoMovimiento.getSelectedItem().toString(), descripcionArea.getText(), medioPago.getSelectedItem().toString(), new Date(), saldoDisponible.getText());             
+                    monto.setText("");
+                    descripcionArea.setText("");
                   }else {
                      JOptionPane.showMessageDialog(null, "No tiene saldo para realizar el Movimiento, por favor agregue dinero o un monto menor a : " + montoEnBilletera);
                 }
@@ -278,6 +303,21 @@ public class BilleteraWindow extends javax.swing.JFrame {
     private void montoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_montoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_montoActionPerformed
+
+    private void saldoExtraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saldoExtraActionPerformed
+        if(ingresoSaldoExtra.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "Debe ingresar Monto Extra");
+        }else{
+            try {
+                usuario1.getBilletera().setMontoTotalDineroDisponible(Float.valueOf(ingresoSaldoExtra.getText()) + usuario1.getBilletera().getMontoTotalDineroDisponible());
+                saldoDisponible.setText(String.valueOf(usuario1.getBilletera().getMontoTotalDineroDisponible()));           
+            } 
+            catch (NumberFormatException e) {
+                  JOptionPane.showMessageDialog(null, "El monto extra debe ser Numerico");
+            }
+            ingresoSaldoExtra.setText("");
+        }
+    }//GEN-LAST:event_saldoExtraActionPerformed
 
     /**
      * @param args the command line arguments
@@ -321,6 +361,7 @@ public class BilleteraWindow extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea descripcionArea;
+    private javax.swing.JTextField ingresoSaldoExtra;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -340,6 +381,7 @@ public class BilleteraWindow extends javax.swing.JFrame {
     private javax.swing.JLabel montoTotalGastos;
     private javax.swing.JLabel nombreUsuario;
     private javax.swing.JLabel saldoDisponible;
+    private javax.swing.JButton saldoExtra;
     private javax.swing.JComboBox<String> tipoMovimiento;
     private javax.swing.JLabel usuarioText;
     // End of variables declaration//GEN-END:variables

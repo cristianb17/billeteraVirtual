@@ -109,11 +109,14 @@ public class Login extends javax.swing.JFrame {
         } catch (IOException ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        if(usuarioObtenido.getPassword().equals((String)password.getText())){
-            new BilleteraWindow(usuarioObtenido).setVisible(true);
-        }else {
-            JOptionPane.showMessageDialog(null, "Usuario u/o contraseña incorrecto");
+        if(usuarioObtenido != null) {
+            if(usuarioObtenido.getPassword().equals((String)password.getText())){
+                new BilleteraWindow(usuarioObtenido).setVisible(true);
+            }else {
+                JOptionPane.showMessageDialog(null, "Usuario y/o contraseña incorrecto");
+            }
+        }else{
+              JOptionPane.showMessageDialog(null, "Usuario Inexistente");
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 

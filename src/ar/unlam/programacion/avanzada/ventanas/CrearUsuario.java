@@ -172,7 +172,7 @@ public class CrearUsuario extends javax.swing.JFrame {
                  || ciudadText.getText().equals("")  || dniText.getText().equals("")
                  || dniText.getText().equals("") ||  passwordText.getText().equals("") 
                  || montoText.getText().equals("")) {
-                 JOptionPane.showMessageDialog(null, "Se ha creado el USUARIO");
+                 JOptionPane.showMessageDialog(null, "Debe completar todos los campos");
          } else {
                Usuario usuario = new Usuario();
                 Billetera billetera = new Billetera();
@@ -182,9 +182,9 @@ public class CrearUsuario extends javax.swing.JFrame {
                 try {
                      usuario.setDni(Long.valueOf(dniText.getText()));
                      billetera.setMontoTotalDineroDisponible(Long.valueOf(montoText.getText()));
-                    usuario.setPassword(passwordText.getText());
-                    usuario.setBilletera(billetera);
-                    boolean escribir = Util.escribirArchivo(dniText.getText(), usuario);
+                     usuario.setPassword(passwordText.getText());
+                     usuario.setBilletera(billetera);
+                     boolean escribir = Util.escribirArchivo(dniText.getText(), usuario);
                     if(escribir){
                        JOptionPane.showMessageDialog(null, "Se ha creado el USUARIO");
                     }

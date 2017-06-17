@@ -51,7 +51,6 @@ public class Util {
             pw.print(String.valueOf(usuario.getDni())+ "-");
             pw.print(String.valueOf(usuario.getPassword())+ "-");
             pw.print(usuario.getBilletera().obtenerDineroDisponible());
-            
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -59,6 +58,7 @@ public class Util {
            // Nuevamente aprovechamos el finally para 
            // asegurarnos que se cierra el fichero.
            if (null != fichero)
+               fichero.flush();
               fichero.close();
            } catch (Exception e2) {
               e2.printStackTrace();
@@ -95,11 +95,10 @@ public class Util {
          usuario.setDni(Long.valueOf(datosUsuario[3]));
          usuario.setPassword(datosUsuario[4]);
          
-         List<Movimiento> movimientos = new ArrayList<Movimiento>();
-         String[] movimiento = null;
-         
-
+        List<Movimiento> movimientos = new ArrayList<Movimiento>();
+        String[] movimiento = null;
         Date fecha = null; 
+        String montoDisponible = null;
          while((linea=br.readLine())!=null) {
              movimiento = linea.split("-");
              Float monto = Float.valueOf(movimiento[0]);
@@ -107,11 +106,15 @@ public class Util {
              String descripcion = movimiento[2];
              String medioPago = movimiento[3];
              fecha = Util.formatearFecha(movimiento[4]); 
+             if(movimiento[5] != null)
+                 montoDisponible = movimiento[5]; 
              Movimiento mov = new Movimiento(monto.floatValue(), tipoMovimiento, descripcion, medioPago, fecha);
              movimientos.add(mov);
          }
-             billetera.setMontoTotalDineroDisponible(Float.valueOf(datosUsuario[5]));
-         
+         if(montoDisponible == null)
+            billetera.setMontoTotalDineroDisponible(Float.valueOf(datosUsuario[5]));
+         else
+             billetera.setMontoTotalDineroDisponible(Float.valueOf(montoDisponible));
          billetera.setMovimientos(movimientos);
          usuario.setBilletera(billetera);
          
@@ -123,7 +126,7 @@ public class Util {
          // una excepcion.
          try{                    
             if( null != fr ){   
-               fr.close();     
+               fr.close(); 
             }                  
          }catch (Exception e2){ 
             e2.printStackTrace();
@@ -133,7 +136,7 @@ public class Util {
    }
    
    public static Date formatearFecha(String fecha) {
-          SimpleDateFormat dt = new SimpleDateFormat("dd.mm.yyyy"); 
+          SimpleDateFormat dt = new SimpleDateFormat("dd.MM.yyyy"); 
            Date date = null;
             try {
                 date = dt.parse(fecha);
@@ -143,7 +146,7 @@ public class Util {
            return date;
    }
    
-    public  static boolean escribirDatosMovimientos(String dni, String monto, String movimiento, String descripcion, String medioDePago, Date fecha)
+    public  static boolean escribirDatosMovimientos(String dni, String monto, String movimiento, String descripcion, String medioDePago, Date fecha, String montoDisponible)
     {
         FileWriter fichero = null;
         PrintWriter pw = null;
@@ -159,14 +162,15 @@ public class Util {
             pw.print(movimiento + "-");
             pw.print(descripcion + "-");
             pw.print(medioDePago + "-");
-            SimpleDateFormat dt = new SimpleDateFormat("dd.mm.yyyy"); 
-            pw.print(dt.format(fecha));
-       
+            SimpleDateFormat dt = new SimpleDateFormat("dd.MM.yyyy"); 
+            pw.print(dt.format(fecha) + "-");
+            pw.print(montoDisponible);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
            try {
            if (null != fichero)
+               fichero.flush();
               fichero.close();
            } catch (Exception e2) {
               e2.printStackTrace();
