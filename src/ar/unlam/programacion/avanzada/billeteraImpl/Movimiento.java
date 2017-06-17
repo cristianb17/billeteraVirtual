@@ -90,7 +90,7 @@ public class Movimiento {
 
 	@Override
 	public String toString() {
-                 SimpleDateFormat dt = new SimpleDateFormat("dd.mm.yyyy"); 
+                 SimpleDateFormat dt = new SimpleDateFormat("dd.MM.yyyy"); 
 		return "[Importe : " + monto + "], [movimiento : " + movimiento.toString() + "], [fecha : " + dt.format(fecha) + "], [descripcion : "
 				+ descripcion + "], [medio de Pago : " + medioDePago + "]";
 	}
