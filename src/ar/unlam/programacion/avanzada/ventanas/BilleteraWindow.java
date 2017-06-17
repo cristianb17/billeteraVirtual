@@ -258,7 +258,6 @@ public class BilleteraWindow extends javax.swing.JFrame {
                     listModel.addElement(usuario1.getBilletera().getMovimientos().get(usuario1.getBilletera().getMovimientos().size() - 1 ).toString());
                     jListMovimientos.setModel(listModel);
                     Util.escribirDatosMovimientos(dni, monto.getText(),tipoMovimiento.getSelectedItem().toString(), descripcionArea.getText(), medioPago.getSelectedItem().toString(), new Date());
-                    Util.escribirArchivo(dni, usuario1);
                   }else {
                      JOptionPane.showMessageDialog(null, "No tiene saldo para realizar el Movimiento, por favor agregue dinero o un monto menor a : " + montoEnBilletera);
                 }
