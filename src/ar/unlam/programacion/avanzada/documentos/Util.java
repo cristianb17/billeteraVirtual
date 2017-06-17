@@ -110,7 +110,8 @@ public class Util {
              Movimiento mov = new Movimiento(monto.floatValue(), tipoMovimiento, descripcion, medioPago, fecha);
              movimientos.add(mov);
          }
-         billetera.setMontoTotalDineroDisponible(Float.valueOf(datosUsuario[5]));
+             billetera.setMontoTotalDineroDisponible(Float.valueOf(datosUsuario[5]));
+         
          billetera.setMovimientos(movimientos);
          usuario.setBilletera(billetera);
          
