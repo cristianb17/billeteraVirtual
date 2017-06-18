@@ -36,7 +36,7 @@ public class Util {
         PrintWriter pw = null;
         try
         {
-            String rutaArchivo = "E:/infoUsuarios" + dni + ".txt";
+            String rutaArchivo = "/infoUsuarios" + dni + ".txt";
             File af = new File(rutaArchivo);
             
             if (af.exists()) { 
@@ -73,7 +73,7 @@ public class Util {
       BufferedReader br = null;
 
       try {
-         archivo = new File ("E:\\infoUsuarios" + dni + ".txt");
+         archivo = new File ("/infoUsuarios" + dni + ".txt");
          if(!archivo.exists()) {
              return null;
          }
@@ -152,7 +152,7 @@ public class Util {
         PrintWriter pw = null;
         try
         {
-            String rutaArchivo = "E:/infoUsuarios" + dni + ".txt";
+            String rutaArchivo = "/infoUsuarios" + dni + ".txt";
             File af = new File(rutaArchivo);
         
             fichero = new FileWriter(rutaArchivo, true);
