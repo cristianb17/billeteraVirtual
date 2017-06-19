@@ -15,12 +15,12 @@ public class Informe {
         PrintWriter pw = null;
         try
         {
-            String rutaArchivo = "/movimientos" + dni + ".txt";
+            SimpleDateFormat dt = new SimpleDateFormat("dd.MM.yyyy"); 
+            String rutaArchivo = "/movimientos_" + dni + "_" + dt.format(new Date())+ ".txt";
             File af = new File(rutaArchivo);
         
-            fichero = new FileWriter(rutaArchivo, true);
+            fichero = new FileWriter(rutaArchivo);
             pw = new PrintWriter(fichero);
-            SimpleDateFormat dt = new SimpleDateFormat("dd.MM.yyyy"); 
             for(Movimiento mov : listaMovimientos) {
                 pw.print("**************************************************************");
                 pw.println();
