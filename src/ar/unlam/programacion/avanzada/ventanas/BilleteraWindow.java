@@ -212,7 +212,7 @@ public class BilleteraWindow extends javax.swing.JFrame {
                         .addGap(0, 115, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(generar)
-                        .addGap(137, 137, 137)
+                        .addGap(91, 91, 91)
                         .addComponent(ingresoSaldoExtra)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(saldoExtra)
